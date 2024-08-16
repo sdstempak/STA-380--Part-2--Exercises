@@ -24,6 +24,10 @@ UTEIDs: sds4382, ahi252
 
 ### Visual story telling part 2: Capital Metro data
 
+[Visual story telling part 2: Capital Metro data answers pdf](Capital_Metro/visual_storytelling_capmetro.pdf)
+
+[Visual story telling part 2: Capital Metro data R Markdown Code](Capital_Metro/visual_storytelling_capmetro.Rmd)
+
 ### Clustering and dimensionality reduction
 
 ### Market segmentation
