@@ -4,8 +4,9 @@ Scott Stempak, Alex Imhoff
 
 UTEIDs: sds4382, ahi252
 
+## Exercise Solutions
 
-[Probability Practice](Probability Practice/)
+[Probability Practice](Proability%20Practice.md)
 
 ## Wrangling the Billboard Top 100
 
