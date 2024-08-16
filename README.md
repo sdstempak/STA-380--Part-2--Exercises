@@ -6,7 +6,7 @@ UTEIDs: sds4382, ahi252
 
 ## Exercise Solutions
 
-[Probability Practice](Proability_Practice.md)
+[Probability Practice](Probability_Practice.md)
 
 ## Wrangling the Billboard Top 100
 
