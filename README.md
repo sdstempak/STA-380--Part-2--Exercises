@@ -18,6 +18,10 @@ UTEIDs: sds4382, ahi252
 
 ### Visual story telling part 1: green buildings
 
+[Visual story telling part 1: green buildings answers pdf](Green_Buildings/visual_storytelling_green_buildings.pdf)
+
+[Visual story telling part 1: green buildings R Markdown Code](Green_Buildings/visual_storytelling_green_buildings.Rmd)
+
 ### Visual story telling part 2: Capital Metro data
 
 ### Clustering and dimensionality reduction
