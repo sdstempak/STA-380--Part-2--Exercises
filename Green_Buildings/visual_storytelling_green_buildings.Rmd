@@ -1,0 +1,144 @@
+---
+title: 'Visual story telling part 1: green buildings'
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r data load green buildings, include=FALSE}
+library(tidyverse)
+library(mosaic)
+library(ggplot2)
+
+greenbuildings <- read.csv('greenbuildings.csv')
+```
+Before I an agree with the conclusions of the on-staff guru, we must see if here baseline analysis is true.
+
+
+First, we can visualize the rent distributions for Green vs Non-Green buildings and look at some basic summary statistics for these two classes of buildings. 
+
+
+```{r rent green buildings, echo=FALSE}
+ggplot(greenbuildings)+
+  geom_boxplot(aes(x=as.factor(green_rating), y=Rent))+
+  labs(title = "Rent Distributions for Green vs Non-Green Buildings",
+       x = "Building Type",
+       y = "Rent ($ per sq.ft. per year)") +
+  scale_x_discrete(labels = c("Non-Green", "Green"))
+```
+
+
+**Green vs Non-Green Building Rent Summary Statistics**
+```{r rent green buildings sum, echo=FALSE}
+greenbuildings %>%
+  group_by(green_rating) %>%
+  summarise(
+    count = n(),
+    mean_rent = mean(Rent, na.rm = TRUE),
+    median_rent = median(Rent, na.rm = TRUE),
+    sd_rent = sd(Rent, na.rm = TRUE),
+    min_rent = min(Rent, na.rm = TRUE),
+    max_rent = max(Rent, na.rm = TRUE)
+  )
+```
+
+Based on the box plot and summary statistics above, we see that the Green buildings do in fact demand higher rents, on average, even though it is only a difference of $1.70 per sq.ft. per year when looking at the mean rents for green vs non-green buildings. 
+
+While this is true, it is important to note that there are more non-green buildings that have much higher average rent per sq.ft. than any green buildings in our data set. This pattern could fade as more green buildings are made, but with our current data set, we can state that green buildings generally charge higher rents.
+
+Next, we can look at some potential confounding variables for the relationship between rent and green status to see if green status is the main impact on the increased rent or if it is some other variables in our data set, such as the size and age of the building.
+
+Based on the scatter plots for rent vs size and age vs size for green buildings vs non-green buildings below, we can see potential confounding relationships. When we look at the first scatter plot, rent vs size for Green vs Non-Green Buildings, we can see that green buildings (1 in the legend), appear to be bigger. To confirm this hypothesis, we can look at the summary statistics and see that, on average, green buildings have a mean size of 325,781.3 sq.ft. and a median size of 241,150 sq.ft. while non-green buildings have a mean size of 225,977.3 sq.ft.	and a median size of 118,696 sq.ft., showing that green buildings could be getting away with charging additional rent per sq.ft. because they are in bigger buildings.
+
+
+```{r rent vs size green buildings, echo=FALSE}
+ggplot(greenbuildings)+
+  geom_point(aes(x= size, y=Rent, shape = as.factor(green_rating), color = as.factor(green_rating)),
+             size = 2, alpha = 0.7)+
+  labs(title = "Size vs Rent for Green vs Non-Green Buildings",
+       x = "Size (sq.ft.)",
+       y = "Rent ($ per sq.ft. per year)",
+       shape = "Green Certification",
+       color = "Green Certification") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+**Green vs Non-Green Building Size Summary Statistics**
+```{r size green buildings sum, echo=FALSE}
+greenbuildings %>%
+  group_by(green_rating) %>%
+  summarise(
+    count = n(),
+    mean_size = mean(size, na.rm = TRUE),
+    median_size = median(size, na.rm = TRUE),
+    sd_size = sd(size, na.rm = TRUE),
+    min_size = min(size, na.rm = TRUE),
+    max_size = max(size, na.rm = TRUE)
+  )
+```
+
+
+When we look at the second scatter plot, age vs size for Green vs Non-Green Buildings, we can see that green buildings (1 in the legend), appear to be newer buildings. To confirm this hypothesis, we can look at the summary statistics and see that, on average, green buildings have a mean age of 23.84 years old and a median age of 22 years old while non-green buildings have a mean age of 49.46 years old	and a median age of 37 years old, showing that green buildings can charge additional rent per sq.ft. since they are much newer buildings.
+
+```{r rent vs age green buildings, echo=FALSE}
+ggplot(greenbuildings)+
+  geom_point(aes(x= age, y=Rent, shape = as.factor(green_rating), color = as.factor(green_rating)),
+             size = 2, alpha = 0.7)+
+  labs(title = "Age vs Rent for Green vs Non-Green Buildings",
+       x = "Age",
+       y = "Rent ($ per sq.ft. per year)",
+       shape = "Green Certification",
+       color = "Green Certification") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+**Green vs Non-Green Building Age Summary Statistics**
+```{r age green buildings sum, echo=FALSE}
+greenbuildings %>%
+  group_by(green_rating) %>%
+  summarise(
+    count = n(),
+    mean_age = mean(age, na.rm = TRUE),
+    median_age = median(age, na.rm = TRUE),
+    sd_age = sd(age, na.rm = TRUE),
+    min_age = min(age, na.rm = TRUE),
+    max_age = max(age, na.rm = TRUE)
+  )
+```
+
+To adjust our plots to see how we might "adjust" for the confounding variables of size and age, we can add trend lines for both building types.
+
+```{r rent vs size green buildings trend, echo=FALSE}
+ggplot(greenbuildings)+
+  geom_point(aes(x= size, y=Rent, shape = as.factor(green_rating), color = as.factor(green_rating)),
+             size = 2, alpha = 0.7)+
+  geom_smooth(aes(x= size, y=Rent, shape = as.factor(green_rating), color = as.factor(green_rating)), method = "lm") +
+  labs(title = "Rent vs Size for Green vs Non-Green Buildings with Trend Lines",
+       x = "Size (sq.ft.)",
+       y = "Rent ($ per sq.ft. per year)",
+       shape = "Green Certification",
+       color = "Green Certification") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+When we add the trend lines, we can see that the green buildings have similar rent prices per sq.ft. than non-green buildings at smaller sizes but lower prices as the size increases. 
+
+
+```{r age vs rent green buildings trend, echo=FALSE}
+ggplot(greenbuildings)+
+  geom_point(aes(x= age, y=Rent, shape = as.factor(green_rating), color = as.factor(green_rating)),
+             size = 2, alpha = 0.7)+
+  geom_smooth(aes(x= age, y=Rent, shape = as.factor(green_rating), color = as.factor(green_rating)), method = "lm") +
+  labs(title = "Age vs Size for Green vs Non-Green Buildings with Trend Lines",
+       x = "Age",
+       y = "Rent ($ per sq.ft. per year)",
+       shape = "Green Certification",
+       color = "Green Certification") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+When we add the trend lines, we can see that the green buildings have higher rent prices per sq.ft. than non-green buildings at different age ranges. 
+
+
+Upon further data analysis, I cannot agree with the conclusions of the on-staff stats guru that higher rents can be demanded solely because of a building having green building certification. My analysis shows that there are other important factors that contribute to higher rents, such as age and size, that can also be the cause of higher rent charges in apartment buildings. With that being said, I recommend tempering your expectations for charging higher rent just because of attaining green building certification.
