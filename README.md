@@ -6,20 +6,22 @@ UTEIDs: sds4382, ahi252
 
 ## Exercise Solutions
 
+### Probability Practice
+
 [Probability Practice](Probability_Practice.md)
 
-## Wrangling the Billboard Top 100
+### Wrangling the Billboard Top 100
 
-## Visual story telling part 1: green buildings
+### Visual story telling part 1: green buildings
 
-## Visual story telling part 2: Capital Metro data
+### Visual story telling part 2: Capital Metro data
 
-## Clustering and dimensionality reduction
+### Clustering and dimensionality reduction
 
-## Market segmentation
+### Market segmentation
 
-## The Reuters corpus
+### The Reuters corpus
 
-## Association rule mining
+### Association rule mining
 
-## Image classification with neural networks
+### Image classification with neural networks
