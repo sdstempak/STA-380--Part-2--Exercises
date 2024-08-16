@@ -8,7 +8,7 @@ UTEIDs: sds4382, ahi252
 
 ### Probability Practice
 
-[Probability Practice](Probability_Practice.md)
+[Probability Practice answers](Probability_Practice.md)
 
 ### Wrangling the Billboard Top 100
 
@@ -37,6 +37,8 @@ UTEIDs: sds4382, ahi252
 ### Market segmentation
 
 ### The Reuters corpus
+
+[The Reuters corpus answers notebook](Reuters_Corpus.ipynb)
 
 ### Association rule mining
 
