@@ -5,7 +5,7 @@ Scott Stempak, Alex Imhoff
 UTEIDs: sds4382, ahi252
 
 
-## Probability Practice(/Probability%20Practice.md)
+Probability Practice(Probability Practice/)
 
 ## Wrangling the Billboard Top 100
 
