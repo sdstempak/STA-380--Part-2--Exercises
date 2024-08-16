@@ -1,6 +1,7 @@
 # STA 380, Part 2: Exercises
  
 Scott Stempak, Alex Imhoff
+
 UTEIDs: sds4382, ahi252
 
 
