@@ -1,0 +1,104 @@
+---
+title: "Clustering and dimensionality reduction"
+subtitle: "Scott Stempak, Alex Imhoff"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r wine data load, include=FALSE}
+library(tidyverse)
+library(mosaic)
+library(ggplot2)
+library(caret)
+library(Rtsne)
+
+wine <- read.csv('wine.csv')
+summary(wine)
+```
+
+### PCA
+
+The first clustering algorithm I chose to run was PCA. After transforming the wine data, I generated some plots to see how well PCA distinguishes the reds from the whites in the data set and if it can also distinguish between different quality levels of wine.
+
+```{r wine data scale and perform pca, include=FALSE}
+set.seed(140)
+
+wine_scaled <- wine %>%
+  select(fixed.acidity:alcohol) %>%
+  scale()
+
+pca <- prcomp(wine_scaled, center = TRUE, scale. = TRUE)
+
+pca_df <- as.data.frame(pca$x)
+pca_df$color <- wine$color
+pca_df$quality <- wine$quality
+```
+
+When looking at a visualization of the first two principal components below, we can see that PCA was able to pretty easily distinguish between the reds and whites as two clear clusters form with the red and blue points.
+
+```{r wine data pca visualization color, echo=FALSE}
+ggplot(pca_df) +
+  geom_point(aes(x = PC1, y = PC2, color = color), alpha = 0.25) +
+  labs(title = "PCA for Wine Color",
+       x = "Principal Component 1",
+       y = "Principal Component 2") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+After seeing initial success using PCA for distinguishing reds from whites, the visualization below shows the first two principal components for PCA with the colors of the points representing different quality levels. As we can see, PCA performs poorly when trying to cluster by quality, as the plot of the first two principal components has no distinct groupings and instead form a homogeneous group of points.
+
+```{r wine data pca visualization quality, echo=FALSE}
+ggplot(pca_df) +
+  geom_point(aes(x = PC1, y = PC2, color = as.factor(quality)), alpha = 0.7) +
+  labs(title = "PCA for Wine Quality",
+       x = "Principal Component 1",
+       y = "Principal Component 2") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+### tSNE
+
+Another clustering approach I chose to run was tSNE. After scaling the wine data and removing duplicate entries, I generated some plots to see how well tSNE distinguishes the reds from the whites in the data set and if it can also distinguish between different quality levels of wine.
+
+```{r wine data scale and perform tsne, include=FALSE}
+set.seed(140)
+
+wine_scaled <- wine %>%
+  select(fixed.acidity:alcohol) %>%
+  scale()
+
+wine_scaled_unique <- wine_scaled[!duplicated(wine_scaled), ]
+
+tsne <- Rtsne(wine_scaled_unique, dims = 2, perplexity = 50, verbose = TRUE)
+
+tsne_df <- as.data.frame(tsne$Y)
+tsne_df$color <- wine$color[!duplicated(wine_scaled)]
+tsne_df$quality <- wine$quality[!duplicated(wine_scaled)]
+```
+
+When looking at a visualization of the first two components from tSNE below, we can see that tSNE was able to pretty easily distinguish between the reds and whites as two clear clusters form with the red and blue points, even slightly better than PCA appeared to cluster the wines by color.
+
+```{r wine data tsne visualization color, echo=FALSE}
+ggplot(tsne_df) +
+  geom_point(aes(x = V1, y = V2, color = color), alpha = 0.7) +
+  labs(title = "tSNE for Wine Color") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+After seeing initial success using tSNE for distinguishing reds from whites, the visualization below shows the output for tSNE with the colors of the points representing different quality levels. As we can see, tSNE also performs poorly when trying to cluster by quality, as the plot of the first two components has no distinct groupings for different wine qualities.
+
+```{r wine data TSNE visualization quality, echo=FALSE}
+ggplot(tsne_df) +
+  geom_point(aes(x = V1, y = V2, color = as.factor(quality)), alpha = 0.9) +
+  labs(title = "tSNE for Wine Quality") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+After running both PCA and tSNE, it is clear to see that there are naturally emerging differences between the color label (red/white) but there are not as clear differences between the quality label, which can be a result of multiple reasons, such as the subjectivity of the wine expert's quality metric, which can vary drastically depending on the taste of the wine expert while there are clear chemical differences between different colored wines.
