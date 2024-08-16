@@ -30,6 +30,10 @@ UTEIDs: sds4382, ahi252
 
 ### Clustering and dimensionality reduction
 
+[Clustering and dimensionality reduction answers pdf](Clustering_and_Dimensionality_Reduction/clustering_and_dim_reduction.pdf)
+
+[Clustering and dimensionality reduction R Markdown Code](Clustering_and_Dimensionality_Reduction/clustering_and_dim_reduction.Rmd)
+
 ### Market segmentation
 
 ### The Reuters corpus
