@@ -43,3 +43,5 @@ UTEIDs: sds4382, ahi252
 ### Association rule mining
 
 ### Image classification with neural networks
+
+[Image classification with neural networks answers notebook](Image_Classification_With_Neural_Networks.ipynb)
