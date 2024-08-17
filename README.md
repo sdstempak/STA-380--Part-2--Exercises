@@ -36,6 +36,8 @@ UTEIDs: sds4382, ahi252
 
 ### Market segmentation
 
+[Market segmentation answers notebook](Market_Segmentation.ipynb)
+
 ### The Reuters corpus
 
 [The Reuters corpus answers notebook](Reuters_Corpus.ipynb)
