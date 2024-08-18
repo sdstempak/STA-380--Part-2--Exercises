@@ -44,6 +44,10 @@ UTEIDs: sds4382, ahi252
 
 ### Association rule mining
 
+[Association rule mining answers pdf](Association_Rules/Association_Rules.pdf)
+
+[Association rule mining R Markdown Code](Association_Rules/Association_Rules.Rmd)
+
 ### Image classification with neural networks
 
 [Image classification with neural networks answers notebook](Image_Classification_With_Neural_Networks.ipynb)
